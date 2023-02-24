@@ -23,18 +23,27 @@
             cursor: pointer;
         }
 
-        .country {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #000000d4;
+        #countries-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
+
+        .country{
+            background-color: rgba(0, 255, 255, 0.153);
+            padding: 20px;
+            border-radius: 2px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
     </style>
 </head>
 
 <body>
 
     <section>
+        <h3>Country List</h3>
         <div id="countries-container">
-            <h3>Country List</h3>
         </div>
     </section>
     <script src="js/countries.js"></script>
