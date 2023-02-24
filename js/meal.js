@@ -21,8 +21,13 @@ const displayMealData = (meals) => {
                 <h5 class="card-title">${meal.strMeal}</h5>
             </div>
             <div class="card-body">
-                <a href="${meal.strYoutube}" class="card-link" target="_blank">YouTube</a>
+                <button onclick="loadMealDetails2(${meal.idMeal})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mealDetailsModal">
+                    See Details
+                </button>
+                <a href="${meal.strYoutube}" class="btn btn-primary" target="_blank">YouTube</a>
             </div>
+            <!-- Button trigger modal -->
+            
         </div>
     `;
     mealsContainer.appendChild(mealDiv);
@@ -38,3 +43,34 @@ const searchMeals = () => {
     loadMealData(searchText);
   }
 };
+
+const loadMealDetails = (idMeal) => {
+  const mealSearchUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+
+  fetch(mealSearchUrl)
+    .then((response) => response.json())
+    .then((meal) => displayMealDetails(meal.meals[0]))
+    .catch((error) => console.log(error));
+};
+
+// async and await
+const loadMealDetails2 = async (idMeal) => {
+  const mealSearchUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+  try {
+    const response = await fetch(mealSearchUrl);
+    const meal = await response.json();
+    displayMealDetails(meal.meals[0]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const displayMealDetails = (mealInfo) => {
+  const mealName = document.getElementById("mealDetailsModalLabel");
+  const mealInstructions = document.getElementById("meal-instructions");
+
+  mealName.innerText = mealInfo.strMeal;
+  mealInstructions.innerText = mealInfo.strInstructions;
+};
+
+loadMealData("fish");
